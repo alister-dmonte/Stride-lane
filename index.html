@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stride Lane | Shoes online</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0}
+:root{--ink:#0f172a;--blue:#2447f5;--sun:#ffd23f;--mist:#eef1f8;--line:#d9deea}
+body{font:16px/1.6 'DM Sans',system-ui,sans-serif;color:var(--ink)}
+h1,h2,h3,.logo{font-family:'Bricolage Grotesque','DM Sans',sans-serif;line-height:1.05;letter-spacing:-.02em}
+h1{font-size:clamp(2.6rem,7vw,5rem)}h2{font-size:clamp(1.8rem,4vw,2.8rem);margin-bottom:.8rem}
+a{color:inherit}img{display:block;width:100%;height:100%;object-fit:cover}
+header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:1.2rem;padding:.8rem 5vw}
+.logo{font-weight:800;font-size:1.5rem;text-decoration:none;margin-right:auto}
+nav{display:flex;gap:1.4rem}nav a{text-decoration:none;border-bottom:2px solid transparent}nav a.cur{border-color:var(--blue)}
+button,.btn{font:inherit;font-weight:700;border:0;border-radius:999px;padding:.7rem 1.4rem;background:var(--blue);color:#fff;cursor:pointer;text-decoration:none;display:inline-block}
+.alt{background:var(--sun);color:var(--ink)}.ghost{background:none;color:var(--ink);border:2px solid var(--ink)}.sm{padding:.1rem .7rem}
+#burger{display:none;background:none;color:var(--ink);font-size:1.4rem;padding:.2rem .6rem}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.page{display:none;padding:3rem 5vw;max-width:1200px;margin:auto}.page.on{display:block}
+.two{display:grid;grid-template-columns:1.1fr 1fr;gap:3rem;align-items:center}
+.two p{max-width:46ch;margin:1rem 0 1.6rem;font-size:1.1rem}
+.pic{background:var(--sun);border-radius:40% 60% 55% 45%/50% 40% 60% 50%;overflow:hidden;aspect-ratio:1}
+.perks{display:flex;gap:2rem;flex-wrap:wrap;margin-top:2.5rem;font-weight:700}
+.chips{display:flex;gap:.6rem;flex-wrap:wrap;margin:1rem 0 1.6rem}.chips button{background:var(--mist);color:var(--ink)}.chips .on{background:var(--ink);color:#fff}
+#who{margin-bottom:.6rem}#chips{margin-top:0}
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem}.cat{text-decoration:none}.cat h3{margin-top:.6rem;font-size:1.4rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:1.6rem}
+.card{cursor:pointer}.card h3{margin-top:.6rem;font-size:1.2rem}
+.ph{aspect-ratio:4/3;border-radius:14px;overflow:hidden;background:var(--mist)}
+label{display:block;font-weight:700;margin-top:.9rem}
+input,select,textarea{display:block;width:100%;font:inherit;font-weight:400;padding:.65rem .8rem;border:1.5px solid var(--line);border-radius:10px;margin-top:.2rem}
+[aria-invalid=true]{border-color:#c62828}.err{color:#c62828;font-size:.9rem;display:block;min-height:1.2em}
+.ok{color:#1b7f3b;font-weight:700;margin-top:.8rem}form button{margin-top:1rem}
+.box{background:var(--mist);border-radius:16px;padding:1.5rem}
+.box p{margin:.6rem 0;font-size:1rem;max-width:none}.sub{font-size:1.1rem;margin:-.2rem 0 1.6rem}
+.map-wrapper{aspect-ratio:4/3;border-radius:16px;overflow:hidden;background:var(--mist)}.map-wrapper iframe{display:block;width:100%;height:100%;border:0}
+ul{padding-left:1.2rem;margin:1rem 0}hr{border:0;border-top:1px solid var(--line);margin:.8rem 0}
+#drawer{position:fixed;top:0;right:0;height:100%;width:min(400px,100%);background:#fff;box-shadow:-8px 0 30px #0003;transform:translateX(100%);visibility:hidden;transition:transform .25s,visibility .25s;z-index:10;padding:1.2rem;overflow:auto}
+#drawer.on{transform:none;visibility:visible}
+.line{display:grid;grid-template-columns:64px 1fr auto;gap:.8rem;align-items:center;padding:.6rem 0;border-bottom:1px solid var(--line)}
+.line img{width:64px;height:64px;border-radius:8px}
+dialog{border:0;border-radius:18px;padding:1.5rem;width:min(720px,92vw)}dialog::backdrop{background:#0f172a99}
+.body{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1rem}
+#toast{position:fixed;bottom:1.2rem;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:.7rem 1.2rem;border-radius:999px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}#toast.on{opacity:1}
+footer{background:var(--ink);color:#fff;padding:2rem 5vw;margin-top:3rem}
+@media(max-width:1000px){#burger{display:block}nav{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;flex-direction:column;padding:1rem 5vw;border-bottom:1px solid var(--line)}nav.open{display:flex}}
+@media(max-width:760px){.two,.body{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="#home">Stride Lane</a>
+  <nav id="nav">
+    <a href="#home">Home</a><a href="#featured">Pair of the week</a><a href="#shop">Shop</a>
+    <a href="#about">About</a><a href="#location">Find us</a><a href="#contact">Contact</a><a href="#login">Sign in</a>
+  </nav>
+  <button id="cartBtn" class="alt">Cart <span id="count">0</span></button>
+  <button id="burger" aria-label="Menu">&#9776;</button>
+</header>
+
+<main>
+<!-- PAGE 1: HOME -->
+<section class="page" id="home">
+  <div class="two">
+    <div>
+      <h1>Find the pair that fits your day.</h1>
+      <p>Running, sneakers and everyday shoes for men and women, in sizes UK 5 to 12. Pick a size, add to cart and check out in under a minute.</p>
+      <a class="btn" href="#shop">Shop shoes</a> <a class="btn ghost" href="#about">Our story</a>
+    </div>
+    <div class="pic" id="heroPic"></div>
+  </div>
+  <div class="perks"><span>Free delivery over &#8377;5,000</span><span>30-day returns</span><span>Secure checkout</span></div>
+  <h2 style="margin-top:3rem">Shop by category</h2>
+  <div class="cats" id="cats"></div>
+</section>
+
+<!-- PAGE 2: PAIR OF THE WEEK -->
+<section class="page" id="featured"><h2>Pair of the week</h2><div class="two" id="spec"></div></section>
+
+<!-- PAGE 3: SHOP -->
+<section class="page" id="shop">
+  <h2>Choose your pair</h2>
+  <div class="chips" id="who"></div>
+  <div class="chips" id="chips"></div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<!-- PAGE 4: ABOUT -->
+<section class="page" id="about">
+  <h2>Made for people who are on their feet</h2>
+  <div class="two">
+    <div>
+      <p>Stride Lane started in 2018 with one idea: buying shoes online should feel as easy as trying them on. We test every pair for comfort before it goes on the shelf.</p>
+      <ul><li>Free returns within 30 days</li><li>Free delivery on orders over &#8377;5,000</li><li>Sizes 5 to 12 in every style</li></ul>
+    </div>
+    <div class="box"><h3>Support hours</h3><ul><li>Monday to Friday: 9:00 to 18:00</li><li>Saturday: 10:00 to 16:00</li><li>Sunday: closed</li></ul>We reply to every message within one working day.</div>
+  </div>
+</section>
+
+<!-- PAGE 5: FIND US -->
+<section class="page" id="location">
+  <h2>Find us</h2>
+  <p class="sub">Come visit us in person and Explore the store for more options</p>
+  <div class="two" style="align-items:start">
+    <div class="map-wrapper">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3763.624551506172!2d72.82640777483488!3d19.385402942187262!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7aec74e3140ff%3A0x75f69f9215d5c989!2sAnnasaheb%20Vartak%20College%20of%20Arts%2C%20Commerce%2C%20Science!5e0!3m2!1sen!2sau!4v1789995387362!5m2!1sen!2sau" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" title="Shoe store location map"></iframe>
+    </div>
+    <div class="box">
+      <h3>Stride Lane</h3>
+      <p><strong>Address:</strong> Shastri Nagar, Vishal Nagar, Vasai West, Vasai-Virar, Maharashtra 401202, India</p>
+      <p><strong>Phone:</strong> <a href="tel:+911234567890">(+91) 1234567890</a></p>
+      <p><strong>Email:</strong> <a href="mailto:info@StrideLane.com">info@StrideLane.com</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 6: CONTACT -->
+<section class="page" id="contact">
+  <h2>Send us a message</h2>
+  <form method="post" action="process.php" novalidate data-ok="Message sent. We will reply within a day." style="max-width:560px">
+    <input type="hidden" name="form" value="contact">
+    <div class="f"><label>Name<input name="name" data-v="name" autocomplete="name"></label><small class="err"></small></div>
+    <div class="f"><label>Email<input name="email" type="email" data-v="email" autocomplete="email"></label><small class="err"></small></div>
+    <div class="f"><label>Message<textarea name="message" rows="5" data-v="msg"></textarea></label><small class="err"></small></div>
+    <button>Send message</button><p class="ok" role="status"></p>
+  </form>
+</section>
+
+<!-- PAGE 7: CHECKOUT -->
+<section class="page" id="checkout">
+  <h2>Checkout</h2>
+  <div class="two" style="align-items:start">
+    <form id="co" method="post" action="process.php" novalidate data-ok="Order placed. A confirmation email is on its way.">
+      <input type="hidden" name="form" value="checkout"><input type="hidden" name="items">
+      <div class="f"><label>Full name<input name="name" data-v="name" autocomplete="name"></label><small class="err"></small></div>
+      <div class="f"><label>Email<input name="email" type="email" data-v="email" autocomplete="email"></label><small class="err"></small></div>
+      <div class="f"><label>Phone<input name="phone" type="tel" data-v="phone" autocomplete="tel"></label><small class="err"></small></div>
+      <div class="f"><label>Street address<input name="address" data-v="address" autocomplete="street-address"></label><small class="err"></small></div>
+      <div class="f"><label>PIN code<input name="postcode" inputmode="numeric" data-v="post" autocomplete="postal-code"></label><small class="err"></small></div>
+      <button>Place order (pay on delivery)</button><p class="ok" role="status"></p>
+    </form>
+    <div class="box" id="sum"></div>
+  </div>
+</section>
+
+<!-- PAGE 8: SIGN IN / CREATE ACCOUNT -->
+<section class="page" id="login">
+  <div class="two" style="align-items:start">
+    <form method="post" action="process.php" novalidate data-ok="Signed in (demo).">
+      <h2>Sign in</h2><input type="hidden" name="form" value="signin">
+      <div class="f"><label>Email<input name="email" type="email" data-v="email" autocomplete="username"></label><small class="err"></small></div>
+      <div class="f"><label>Password<input name="password" type="password" data-v="req" autocomplete="current-password"></label><small class="err"></small></div>
+      <button>Sign in</button><p class="ok" role="status"></p>
+    </form>
+    <form method="post" action="process.php" novalidate data-ok="Account created. You can sign in now.">
+      <h2>Create account</h2><input type="hidden" name="form" value="register">
+      <div class="f"><label>Full name<input name="name" data-v="name" autocomplete="name"></label><small class="err"></small></div>
+      <div class="f"><label>Email<input name="email" type="email" data-v="email" autocomplete="email"></label><small class="err"></small></div>
+      <div class="f"><label>Password<input name="password" type="password" data-v="pass" autocomplete="new-password"></label><small class="err"></small></div>
+      <div class="f"><label>Confirm password<input name="confirm" type="password" data-v="confirm" autocomplete="new-password"></label><small class="err"></small></div>
+      <button>Create account</button><p class="ok" role="status"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer><b>Stride Lane</b> &copy; 2026. Demo project. Photos from Unsplash.</footer>
+
+<aside id="drawer" aria-label="Your cart">
+  <h2>Your cart</h2><div id="lines"></div><p id="tot" style="margin:1rem 0"></p>
+  <a class="btn" href="#checkout" id="go">Checkout</a> <button class="ghost" id="clear">Clear cart</button>
+  <button class="ghost sm" id="shut" style="float:right">Close</button>
+</aside>
+<dialog id="dlg"><div class="body"></div><button class="ghost sm" onclick="dlg.close()">Close</button></dialog>
+<div id="toast" role="status"></div>
+
+<script>
+const USE_PHP=false; // set to true when running on a PHP server so forms post to process.php
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const U=i=>`https://images.unsplash.com/photo-${i}?auto=format&fit=crop&w=800&q=70`;
+const FB="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 300'%3E%3Crect width='400' height='300' fill='%23eef1f8'/%3E%3Cpath d='M70 200c30-5 50-40 70-70l30 20c15 10 40 5 55-10l55 45c20 15 60 15 55 45H70z' fill='%232447f5'/%3E%3C/svg%3E";
+const P=[
+{id:1,n:'Ember Runner',g:'Men',c:'Running',p:5999,i:'1542291026-7eec264c27ff',d:'Cushioned daily trainer with a breathable mesh upper.'},
+{id:2,n:'Court Classic',g:'Men',c:'Sneakers',p:4499,i:'1549298916-b41d501d3772',d:'A low-profile sneaker that goes with everything.'},
+{id:3,n:'Skyline Pace',g:'Women',c:'Running',p:7499,i:'1460353581641-37baddab0fa2',d:'Lightweight racer with a springy foam midsole.'},
+{id:4,n:'Neon Drift',g:'Women',c:'Casual',p:3999,i:'1491553895911-0055eca6402d',d:'A bright everyday pair, soft inside and easy to clean.'},
+{id:5,n:'Cloud Walker',g:'Women',c:'Casual',p:3499,i:'1595950653106-6c9ebd614d3a',d:'Clean white upper with a cushioned sole for long days.'},
+{id:6,n:'Hoop High',g:'Men',c:'Sneakers',p:7999,i:'1600185365926-3a2ce3cdb9eb',d:'High-top with ankle support and a grippy outsole.'},
+{id:7,n:'Tidal Trainer',g:'Men',c:'Running',p:5499,i:'1608231387042-66d1773070a5',d:'Stable trainer for gym sessions and short runs.'},
+{id:8,n:'Metro Low',g:'Women',c:'Sneakers',p:4999,i:'1525966222134-fcfa99b8ae77',d:'A relaxed low-top that is ready for the street.'}];
+const money=n=>'\u20B9'+n.toLocaleString('en-IN'),find=id=>P.find(p=>p.id==id);
+const img=p=>`<img src="${U(p.i)}" alt="${p.n} shoe" loading="lazy" onerror="this.onerror=null;this.src=FB">`;
+let cart=[],cat='All',who='All';
+
+/* ---------- pages (hash routing) ---------- */
+function route(){
+  let id=(location.hash||'#home').slice(1);
+  if(!$('#'+id)||!$('#'+id).classList.contains('page'))id='home';
+  $$('.page').forEach(s=>s.classList.toggle('on',s.id===id));
+  $$('nav a').forEach(a=>a.classList.toggle('cur',a.getAttribute('href')==='#'+id));
+  $('#nav').classList.remove('open');$('#drawer').classList.remove('on');scrollTo(0,0);
+  if(id==='checkout')summary();
+}
+addEventListener('hashchange',route);
+$('#burger').onclick=()=>$('#nav').classList.toggle('open');
+
+/* ---------- shop ---------- */
+function shop(){
+  $('#who').innerHTML=['All','Men','Women'].map(w=>`<button class="${w===who?'on':''}" data-w="${w}">${w==='All'?'All shoes':w}</button>`).join('');
+  $('#chips').innerHTML=['All','Running','Sneakers','Casual'].map(c=>`<button class="${c===cat?'on':''}" data-c="${c}">${c}</button>`).join('');
+  $('#grid').innerHTML=P.filter(p=>(who==='All'||p.g===who)&&(cat==='All'||p.c===cat)).map(p=>`<article class="card" tabindex="0" data-id="${p.id}"><div class="ph">${img(p)}</div><h3>${p.n}</h3><span>${p.g}'s ${p.c}</span> <b>${money(p.p)}</b></article>`).join('');
+}
+const dlg=$('#dlg');
+function show(id){
+  const p=find(id);
+  $('#dlg .body').innerHTML=`<div class="ph">${img(p)}</div><div><h3>${p.n}</h3><span>${p.g}'s ${p.c}</span><p>${p.d}</p><b>${money(p.p)}</b><label>Size (UK)<select id="size">${[5,6,7,8,9,10,11,12].map(s=>`<option>${s}</option>`).join('')}</select></label><button id="add">Add to cart</button></div>`;
+  $('#add').onclick=()=>{add(p.id,$('#size').value);dlg.close()};
+  dlg.showModal();
+}
+document.addEventListener('click',e=>{
+  const c=e.target.closest('[data-c]'),w=e.target.closest('[data-w]'),k=e.target.closest('[data-id]'),q=e.target.closest('[data-q]');
+  if(c){cat=c.dataset.c;shop()}
+  if(w){who=w.dataset.w;shop()}
+  if(k)show(k.dataset.id);
+  if(q){const l=cart[q.dataset.q];l.q+=+q.dataset.d;if(l.q<1)cart.splice(q.dataset.q,1);drawCart()}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('.card'))show(e.target.dataset.id)});
+
+/* ---------- cart ---------- */
+function add(id,s){
+  const l=cart.find(x=>x.id==id&&x.s==s);l?l.q++:cart.push({id,s,q:1});
+  drawCart();toast('Added to cart');
+}
+function totals(){
+  const s=cart.reduce((a,l)=>a+find(l.id).p*l.q,0),d=s===0||s>=5000?0:99;
+  return{s,d,t:s+d};
+}
+function drawCart(){
+  $('#count').textContent=cart.reduce((a,l)=>a+l.q,0);
+  $('#lines').innerHTML=cart.length?cart.map((l,i)=>{const p=find(l.id);
+    return`<div class="line">${img(p)}<div><b>${p.n}</b><br>Size ${l.s}, ${money(p.p)}</div><div><button class="ghost sm" data-q="${i}" data-d="-1" aria-label="Remove one">-</button> ${l.q} <button class="ghost sm" data-q="${i}" data-d="1" aria-label="Add one">+</button></div></div>`}).join(''):'<p>Your cart is empty. Pick a pair from the shop.</p>';
+  const t=totals();
+  $('#tot').innerHTML=`Subtotal ${money(t.s)}<br>Delivery ${t.d?money(t.d):'Free'}<br><b>Total ${money(t.t)}</b>`;
+}
+function summary(){
+  $('#sum').innerHTML=cart.length?'<h3>Your order</h3><hr>'+cart.map(l=>`${find(l.id).n}, size ${l.s} x ${l.q}`).join('<br>')+'<hr>'+$('#tot').innerHTML:'Your cart is empty. <a href="#shop">Go to the shop</a>.';
+}
+$('#cartBtn').onclick=()=>$('#drawer').classList.add('on');
+$('#shut').onclick=()=>$('#drawer').classList.remove('on');
+$('#go').onclick=()=>$('#drawer').classList.remove('on');
+$('#clear').onclick=()=>{cart=[];drawCart();summary()};
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');setTimeout(()=>t.classList.remove('on'),1800)}
+
+/* ---------- form validation ---------- */
+const R={
+  name:v=>v.trim().length>=2||'Enter your full name (at least 2 letters).',
+  email:v=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)||'Enter a valid email like name@example.com.',
+  phone:v=>/^(\+91[\s-]?)?[6-9]\d{9}$/.test(v)||'Enter a 10-digit Indian mobile number.',
+  address:v=>v.trim().length>=8||'Enter your full street address.',
+  post:v=>/^\d{6}$/.test(v)||'Enter a 6-digit PIN code.',
+  msg:v=>v.trim().length>=10||'Write at least 10 characters.',
+  req:v=>v.length>0||'Enter your password.',
+  pass:v=>/^(?=.*\d).{8,}$/.test(v)||'Use at least 8 characters, including a number.',
+  confirm:(v,f)=>v===f.elements.password.value||'The passwords do not match.'
+};
+function one(i,f){
+  const r=R[i.dataset.v](i.value,f);
+  i.closest('.f').querySelector('.err').textContent=r===true?'':r;
+  i.setAttribute('aria-invalid',r!==true);
+  return r===true;
+}
+$$('form').forEach(f=>{
+  f.addEventListener('input',e=>{if(e.target.getAttribute('aria-invalid')==='true')one(e.target,f)});
+  f.addEventListener('submit',e=>{
+    const ok=[...f.querySelectorAll('[data-v]')].map(i=>one(i,f)).every(Boolean);
+    if(!ok){e.preventDefault();f.querySelector('[aria-invalid=true]').focus();return}
+    if(f.id==='co'){
+      if(!cart.length){e.preventDefault();toast('Your cart is empty.');return}
+      f.elements.items.value=JSON.stringify(cart);
+    }
+    if(!USE_PHP){e.preventDefault();f.querySelector('.ok').textContent=f.dataset.ok;if(f.id==='co'){cart=[];drawCart();summary()}f.reset()}
+  });
+});
+
+/* ---------- start ---------- */
+$('#heroPic').innerHTML=img(P[0]);
+$('#cats').innerHTML=[['Men',P[1]],['Women',P[4]]].map(([g,p])=>`<a class="cat" href="#shop" data-w="${g}"><div class="ph">${img(p)}</div><h3>${g}'s shoes</h3></a>`).join('');
+const w=P[2];
+$('#spec').innerHTML=`<div class="pic">${img(w)}</div><div><h3 style="font-size:2rem">${w.n}</h3><p>${w.d} It is our lightest shoe and the one our testers keep reaching for on race day.</p><b>${money(w.p)}</b><br><br><button data-id="${w.id}">Choose size</button></div>`;
+shop();drawCart();route();
+</script>
+</body>
+</html>
